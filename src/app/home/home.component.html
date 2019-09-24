@@ -1,0 +1,34 @@
+<!-- 
+  Not Started : Color is Red (Status = 3)
+  In Progress: Color is Blue (Status = 2)
+  Completed : Color is Green (Status = 1)
+-->
+<div class="col-10 bg-white pt-3 pb-3">
+	<h5 class="border-bottom pb-1"><i class="fa fa-user" [ngClass]="status == 1 ? 'text-success' : status == 3 ? 'text-danger' : status == 2 ? 'text-primary': 'text-disabled'" aria-hidden="true"> </i> Users</h5>
+<!-- Tabs -->
+<nav class="nav nav-pills nav-justified">
+  <a class="nav-item nav-link" [ngClass]="filterText.Type==1 ? 'active':''" (click)="filterByType(1)">Tasks</a>
+  <a class="nav-item nav-link" [ngClass]="filterText.Type==2 ? 'active':''" (click)="filterByType(2)">Bugs</a>
+  <a class="nav-item nav-link" [ngClass]="filterText.Status==1 ? 'active':''" (click)="filterByStatus(1)">Completed</a>
+  <a class="nav-item nav-link" [ngClass]="filterText.Status==2 ? 'active':''" (click)="filterByStatus(2)">In Progress</a>
+  <a class="nav-item nav-link" [ngClass]="filterText.Status==3 ? 'active':''" (click)="filterByStatus(3)">Not Started</a>
+</nav>
+<!-- End Tabs-->
+<!-- List of Tickets -->
+ <table class="table">
+      	<tr *ngFor="let ticket of tickets | filter: filterText;let i=index">
+      		<td><i class="fa fa-circle" [ngClass]="ticket.Status == 1 ? 'text-success' : ticket.Status == 3 ? 'text-danger' : ticket.Status == 2 ? 'text-primary' : 'text-disabled'" aria-hidden="true"></i></td>
+      		<td>{{i+1}}. {{ticket.Description}}</td>
+      		<td>
+      			 <div class="btn-group float-right" ngbDropdown role="group" aria-label="Status">
+			    <button class="btn" [ngClass]="ticket.Status == 1 ? 'btn-success' : ticket.Status == 3 ? 'btn-danger' : ticket.Status == 2 ? 'btn-primary' : 'btn-disabled'"  ngbDropdownToggle>
+        {{ticket.Status == 1 ? 'Completed' : ticket.Status == 2 ? 'In Progress' : ticket.Status == 3 ? 'Not Started' :'' }}</button>
+			    <div class="dropdown-menu" ngbDropdownMenu>
+			      <button *ngFor="let status of statusText;" id="{{status}}" (click)="changeStatus(status,ticket.Id)" ngbDropdownItem>{{status == 1 ? 'Completed' : status == 2 ? 'In Progress' : status == 3 ? 'Not Started' : '' }}</button>
+			    </div>
+			</div>
+      		</td>
+      	</tr>
+      </table>
+<!-- End List of Tickets -->
+</div>
